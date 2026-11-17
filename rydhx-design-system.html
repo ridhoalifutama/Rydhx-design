@@ -1,0 +1,738 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#fff7fc">
+  <title>Rydhx — Design System</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      color-scheme: light;
+      --paper: #fff7fc;
+      --paper-2: #f0f0f0;
+      --surface: #ffffff;
+      --surface-soft: #faf8fc;
+      --ink: #3c486b;
+      --ink-2: #3c486b;
+      --muted: #66718e;
+      --faint: #818ba6;
+      --line: #e5e5ec;
+      --violet: #5755fe;
+      --periwinkle: #8b93ff;
+      --periwinkle-soft: #f0f0ff;
+      --pink: #ff71cd;
+      --success: #5755fe;
+      --success-soft: #f0f0ff;
+      --warning: #f9d949;
+      --warning-soft: #fff8d8;
+      --danger: #f45050;
+      --danger-soft: #fff0f0;
+      --shadow-card: 0 2px 6px rgba(60, 72, 107, .05), 0 18px 48px -36px rgba(60, 72, 107, .24);
+      --shadow-float: 0 14px 34px -18px rgba(87, 85, 254, .42);
+      --space-1: 4px;
+      --space-2: 8px;
+      --space-3: 12px;
+      --space-4: 16px;
+      --space-5: 20px;
+      --space-6: 24px;
+      --space-7: 32px;
+      --space-8: 40px;
+      --radius-sm: 10px;
+      --radius-md: 16px;
+      --radius-lg: 22px;
+      --radius-xl: 28px;
+      --radius-2xl: 32px;
+      --radius-full: 9999px;
+      --font-sans: "Plus Jakarta Sans", "Segoe UI", ui-sans-serif, system-ui, sans-serif;
+      --font-serif: "Instrument Serif", Georgia, serif;
+      --type-display: clamp(38px, 5vw, 62px);
+      --type-page-title: clamp(25px, 3vw, 34px);
+      --type-section-title: clamp(23px, 3vw, 31px);
+      --type-card-title: 16px;
+      --type-body: 15px;
+      --type-small: 12px;
+      --type-caption: 11px;
+      --type-eyebrow: 10px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 24px; }
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font: 15px/1.55 var(--font-sans);
+      -webkit-font-smoothing: antialiased;
+    }
+    button, input { font: inherit; }
+    button { color: inherit; }
+    a { color: inherit; text-decoration: none; }
+    .app { min-height: 100vh; }
+
+    .topbar {
+      position: sticky;
+      z-index: 20;
+      top: 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+      padding: 0 28px;
+      border-bottom: 1px solid var(--line);
+      background: rgba(255,255,255,.92);
+      backdrop-filter: blur(14px);
+    }
+    .brand { display: flex; align-items: center; gap: 10px; font-weight: 800; letter-spacing: -.04em; }
+    .brand-mark {
+      display: grid;
+      width: 30px;
+      height: 30px;
+      place-items: center;
+      border-radius: 10px;
+      background: var(--violet);
+      color: var(--surface);
+      font-size: 15px;
+      font-weight: 900;
+      letter-spacing: -.08em;
+    }
+    .top-meta { display: flex; align-items: center; gap: 10px; color: var(--muted); font-size: 12px; }
+    .version {
+      padding: 5px 10px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-full);
+      background: var(--surface);
+      color: var(--ink-2);
+      font-weight: 650;
+    }
+
+    .layout { display: grid; grid-template-columns: 248px minmax(0, 1fr); min-height: calc(100vh - 64px); }
+    .sidebar {
+      position: sticky;
+      top: 64px;
+      align-self: start;
+      height: calc(100vh - 64px);
+      overflow-y: auto;
+      padding: 24px 14px;
+      border-right: 1px solid var(--line);
+      background: var(--paper-2);
+    }
+    .search-wrap { position: relative; margin: 0 4px 22px; }
+    .search-icon {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      width: 16px;
+      height: 16px;
+      color: var(--faint);
+    }
+    .search {
+      width: 100%;
+      height: 40px;
+      padding: 0 12px 0 36px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      outline: none;
+      background: rgba(255,255,255,.8);
+      color: var(--ink);
+      font-size: 13px;
+    }
+    .search:focus { border-color: var(--violet); box-shadow: 0 0 0 3px rgba(87,85,254,.16); }
+    .nav-label { margin: 0 10px 8px; color: var(--faint); font-size: 10px; font-weight: 800; letter-spacing: .11em; text-transform: uppercase; }
+    .nav { display: grid; gap: 3px; }
+    .nav-link {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-height: 39px;
+      padding: 8px 10px;
+      border-radius: 11px;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 620;
+      transition: background .18s ease, color .18s ease, transform .18s ease;
+    }
+    .nav-link:hover { background: rgba(255,255,255,.7); color: var(--ink); }
+    .nav-link.active { background: var(--surface); color: var(--ink); box-shadow: 0 1px 3px rgba(60,72,107,.08); }
+    .nav-icon { display: grid; width: 20px; place-items: center; color: var(--violet); }
+    .nav-icon svg { width: 16px; height: 16px; stroke-width: 1.8; }
+    .nav-link[hidden] { display: none; }
+    .sidebar-note {
+      margin: 25px 4px 0;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 15px;
+      background: rgba(255,255,255,.72);
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.55;
+    }
+    .sidebar-note strong { display: block; margin-bottom: 4px; color: var(--ink); font-size: 12px; }
+
+    main { min-width: 0; padding: 34px clamp(20px, 4vw, 58px) 72px; }
+    .content { width: min(1120px, 100%); margin: 0 auto; }
+    .section { margin: 0 0 26px; scroll-margin-top: 86px; }
+    .panel {
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-xl);
+      background: var(--surface);
+      box-shadow: var(--shadow-card);
+    }
+    .panel-pad { padding: clamp(22px, 3.2vw, 38px); }
+    .section-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 20px; margin-bottom: 22px; }
+    .eyebrow { margin: 0 0 7px; color: var(--violet); font-size: var(--type-eyebrow); font-weight: 800; letter-spacing: .13em; text-transform: uppercase; }
+    h1, h2, h3, p { margin-top: 0; }
+    h1, h2, h3 { font-family: var(--font-sans); }
+    h1 { margin-bottom: 14px; font-size: var(--type-display); font-weight: 800; line-height: 1.04; letter-spacing: -.065em; }
+    h2 { margin-bottom: 0; font-size: var(--type-section-title); font-weight: 800; line-height: 1.15; letter-spacing: -.045em; }
+    h3 { margin-bottom: 7px; font-size: var(--type-card-title); font-weight: 700; line-height: 1.3; letter-spacing: -.02em; }
+    .serif-accent { font-family: var(--font-serif); font-weight: 400; font-style: italic; letter-spacing: -.025em; }
+    .lead { max-width: 600px; margin-bottom: 24px; color: var(--muted); font-size: 16px; }
+    .subtle { color: var(--muted); }
+    .small { color: var(--muted); font-size: var(--type-small); }
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 10px;
+      border-radius: var(--radius-full);
+      background: var(--periwinkle-soft);
+      color: var(--ink);
+      font-size: 11px;
+      font-weight: 750;
+    }
+    .tag-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--violet); }
+    .notice {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 13px 15px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: var(--surface-soft);
+      color: var(--muted);
+      font-size: 12px;
+    }
+    .notice-icon { flex: 0 0 auto; margin-top: 1px; color: var(--violet); font-size: 17px; }
+    .notice strong { color: var(--ink); }
+    .grid { display: grid; gap: 14px; }
+    .grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .grid-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .mini-card { padding: 18px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface-soft); }
+    .mini-card p:last-child { margin-bottom: 0; }
+
+    .hero-grid { display: grid; grid-template-columns: 1.04fr .96fr; gap: 24px; align-items: center; }
+    .hero-copy { padding: 6px 0; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 10px; margin: 22px 0 20px; }
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 44px;
+      padding: 0 18px;
+      border: 0;
+      border-radius: var(--radius-full);
+      background: var(--violet);
+      color: var(--surface);
+      font-size: 13px;
+      font-weight: 780;
+      cursor: pointer;
+      transition: transform .18s ease, background .18s ease, box-shadow .18s ease;
+    }
+    .button:hover { background: #4947e8; box-shadow: var(--shadow-float); transform: translateY(-1px); }
+    .button:active { transform: scale(.98); }
+    .button.secondary { border: 1px solid var(--line); background: var(--surface); }
+    .button.secondary:hover { border-color: var(--periwinkle); background: var(--surface-soft); box-shadow: none; }
+    .button.dark { background: var(--ink); color: white; }
+    .button.dark:hover { background: var(--ink-2); }
+    .button.small-button { min-height: 36px; padding: 0 13px; font-size: 12px; }
+    .hero-footnote { display: flex; align-items: center; gap: 8px; color: var(--muted); font-size: 11px; }
+
+    .preview-window { overflow: hidden; border: 1px solid var(--line); border-radius: 24px; background: var(--paper-2); box-shadow: 0 24px 60px -40px rgba(60,72,107,.4); }
+    .preview-bar { display: flex; align-items: center; gap: 5px; height: 34px; padding: 0 13px; border-bottom: 1px solid var(--line); background: var(--surface-soft); }
+    .preview-bar i { width: 7px; height: 7px; border-radius: 50%; background: var(--periwinkle); }
+    .preview-body { padding: 20px; }
+    .mock-site-nav { display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; }
+    .mock-logo { display: flex; align-items: center; gap: 7px; font-size: 12px; font-weight: 850; letter-spacing: -.04em; }
+    .mock-mark { display: grid; width: 22px; height: 22px; place-items: center; border-radius: 7px; background: var(--violet); color: var(--surface); font-size: 11px; }
+    .mock-navlinks { display: flex; gap: 13px; color: var(--muted); font-size: 8px; }
+    .mock-site-hero { position: relative; min-height: 172px; padding: 19px; border-radius: 18px; background: var(--surface); }
+    .mock-site-hero .tag { padding: 4px 7px; font-size: 8px; }
+    .mock-site-hero h3 { max-width: 230px; margin: 12px 0 6px; font-size: clamp(17px, 2.5vw, 24px); font-weight: 800; line-height: 1.12; letter-spacing: -.06em; }
+    .mock-site-hero p { max-width: 220px; margin: 0 0 12px; color: var(--muted); font-size: 8px; }
+    .mock-site-hero .button { min-height: 27px; padding: 0 11px; font-size: 8px; }
+    .mock-art {
+      position: absolute;
+      right: 15px;
+      bottom: 14px;
+      display: grid;
+      width: 104px;
+      height: 112px;
+      place-items: center;
+      border-radius: 20px;
+      background: linear-gradient(145deg, var(--periwinkle), var(--pink));
+      transform: rotate(4deg);
+    }
+    .mock-art::before { width: 58px; height: 70px; border: 1px solid rgba(60,72,107,.26); border-radius: 7px; background: rgba(255,255,255,.75); content: ""; transform: rotate(-8deg); }
+    .mock-art::after { position: absolute; width: 34px; height: 34px; border-radius: 50%; background: var(--violet); content: ""; transform: translate(7px, -7px); }
+    .mock-services { display: grid; grid-template-columns: repeat(3, 1fr); gap: 7px; margin-top: 9px; }
+    .mock-service { height: 58px; padding: 9px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); }
+    .mock-service b { display: block; margin-bottom: 5px; font-size: 8px; }
+    .mock-service span { color: var(--muted); font-size: 7px; }
+
+    .token-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+    .swatch { overflow: hidden; border: 1px solid var(--line); border-radius: 16px; background: var(--surface); }
+    .swatch-color { height: 75px; }
+    .swatch-info { padding: 10px 12px 12px; }
+    .swatch-name { display: flex; justify-content: space-between; gap: 8px; font-size: 12px; font-weight: 750; }
+    .swatch-hex { margin-top: 3px; color: var(--muted); font: 11px/1.4 ui-monospace, SFMono-Regular, Consolas, monospace; }
+    .token-group { margin-top: 22px; }
+    .token-group:first-of-type { margin-top: 0; }
+    .token-group h3 { margin-bottom: 11px; }
+    .type-row { display: grid; grid-template-columns: 150px 1fr; align-items: center; gap: 18px; padding: 14px 0; border-top: 1px solid var(--line); }
+    .type-label { color: var(--muted); font-size: 11px; }
+    .type-sample { overflow-wrap: anywhere; }
+    .type-hero { font-size: var(--type-display); font-weight: 800; line-height: 1; letter-spacing: -.065em; }
+    .type-title { font-size: var(--type-page-title); font-weight: 800; line-height: 1.1; letter-spacing: -.05em; }
+    .type-card-title { font-size: var(--type-card-title); font-weight: 700; }
+    .type-body { font-size: var(--type-body); }
+    .type-small { color: var(--muted); font-size: var(--type-small); }
+    .type-caption { color: var(--muted); font-size: var(--type-caption); }
+    .type-eyebrow { color: var(--violet); font-size: var(--type-eyebrow); font-weight: 800; letter-spacing: .13em; text-transform: uppercase; }
+    .type-serif { font-family: var(--font-serif); font-size: 34px; font-style: italic; line-height: 1; }
+
+    .scale-list { display: grid; gap: 9px; }
+    .scale-row { display: grid; grid-template-columns: 90px 1fr 54px; align-items: center; gap: 12px; }
+    .scale-name, .scale-value { color: var(--muted); font: 11px ui-monospace, SFMono-Regular, Consolas, monospace; }
+    .scale-bar { height: 9px; border-radius: var(--radius-full); background: linear-gradient(90deg, var(--violet), var(--periwinkle)); }
+    .radius-header, .radius-row { display: grid; grid-template-columns: minmax(0, 1fr) 80px 110px; align-items: center; gap: 16px; }
+    .radius-header { padding: 0 0 10px; color: var(--muted); font-size: 11px; }
+    .radius-demo { border-top: 1px solid var(--line); }
+    .radius-row { min-height: 76px; padding: 11px 0; border-bottom: 1px solid var(--line); }
+    .radius-name { display: block; font-size: 13px; font-weight: 750; }
+    .radius-use { display: block; margin-top: 2px; color: var(--muted); font-size: 11px; }
+    .radius-value { color: var(--muted); font: 12px ui-monospace, SFMono-Regular, Consolas, monospace; }
+    .radius-preview { width: 84px; height: 40px; border: 1px solid var(--periwinkle); background: var(--periwinkle-soft); }
+    .shadow-demo { min-height: 92px; border: 1px solid var(--line); border-radius: 18px; background: var(--surface); }
+
+    .component-card { min-height: 156px; padding: 24px; border: 0; border-radius: var(--radius-xl); background: var(--surface); box-shadow: var(--shadow-card); }
+    .component-label { margin-bottom: 13px; color: var(--muted); font-size: 10px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
+    .button-row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+    .demo-input { width: 100%; height: 44px; padding: 0 13px; border: 1px solid var(--line); border-radius: 13px; outline: none; background: var(--surface); font-size: 12px; }
+    .demo-input:focus { border-color: var(--violet); box-shadow: 0 0 0 3px rgba(87,85,254,.16); }
+    .service-card { display: flex; min-height: 100%; flex-direction: column; padding: 24px; border-radius: var(--radius-xl); background: var(--surface); box-shadow: var(--shadow-card); }
+    .service-card .component-label { margin-bottom: 15px; }
+    .service-card h3 { margin-top: 12px; }
+    .service-card p { margin: 0 0 14px; color: var(--muted); font-size: 12px; }
+    .service-bottom { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: auto; padding-top: 10px; border-top: 1px solid var(--line); }
+    .price-placeholder { color: var(--ink); font-size: 12px; font-weight: 800; }
+    .pill { display: inline-flex; align-items: center; gap: 5px; padding: 5px 9px; border-radius: var(--radius-full); background: var(--periwinkle-soft); color: var(--ink); font-size: 10px; font-weight: 800; }
+    .status-icon { font-size: 13px; line-height: 1; }
+    .pill.neutral { background: var(--paper-2); color: var(--ink-2); }
+    .pill.warning { background: var(--warning); color: var(--ink); }
+    .steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; counter-reset: step; }
+    .step { position: relative; min-height: 142px; padding: 16px; border: 1px solid var(--line); border-radius: 17px; background: var(--surface); counter-increment: step; }
+    .step::before { display: grid; width: 27px; height: 27px; margin-bottom: 13px; place-items: center; border-radius: 9px; background: var(--violet); color: var(--surface); content: counter(step, decimal-leading-zero); font-size: 10px; font-weight: 850; }
+    .step p { margin-bottom: 0; color: var(--muted); font-size: 11px; }
+    .tree { display: grid; gap: 8px; }
+    .tree-item { padding: 11px 14px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface-soft); font-size: 12px; }
+    .tree-item strong { display: inline-block; min-width: 170px; }
+    .tree-item.child { margin-left: 24px; background: var(--surface); }
+    .asset-placeholder { display: grid; min-height: 126px; place-items: center; border: 1px dashed var(--periwinkle); border-radius: 18px; background: var(--surface-soft); color: var(--muted); text-align: center; }
+    .asset-placeholder b { display: block; margin-bottom: 4px; color: var(--ink); }
+    .footer-note { padding: 18px 4px 0; color: var(--faint); font-size: 11px; text-align: center; }
+
+    @media (max-width: 960px) {
+      .layout { grid-template-columns: 210px minmax(0, 1fr); }
+      .grid-4, .token-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .hero-grid { grid-template-columns: 1fr; }
+      .preview-window { max-width: 560px; }
+      .grid-3 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @media (max-width: 680px) {
+      .topbar { height: 58px; padding: 0 16px; }
+      .layout { display: block; min-height: calc(100vh - 58px); }
+      .sidebar { position: sticky; z-index: 15; top: 58px; width: 100%; height: auto; padding: 8px 12px; border-right: 0; border-bottom: 1px solid var(--line); }
+      .search-wrap, .nav-label, .sidebar-note { display: none; }
+      .nav { display: flex; overflow-x: auto; gap: 5px; scrollbar-width: none; }
+      .nav::-webkit-scrollbar { display: none; }
+      .nav-link { flex: 0 0 auto; min-height: 36px; gap: 6px; padding: 7px 10px; font-size: 11px; }
+      .nav-icon { width: auto; }
+      main { padding: 20px 14px 52px; }
+      .section { margin-bottom: 15px; scroll-margin-top: 115px; }
+      .panel { border-radius: 21px; }
+      .panel-pad { padding: 21px 17px; }
+      .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+      .token-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px; }
+      .swatch-color { height: 58px; }
+      .type-row { grid-template-columns: 95px 1fr; gap: 10px; }
+      .radius-header, .radius-row { grid-template-columns: minmax(0, 1fr) 58px 60px; gap: 8px; }
+      .radius-preview { width: 56px; height: 34px; }
+      .component-card, .service-card { padding: 18px; }
+      .steps { grid-template-columns: repeat(2, 1fr); }
+      .tree-item strong { display: block; min-width: 0; margin-bottom: 3px; }
+      .tree-item.child { margin-left: 14px; }
+      .mock-navlinks { gap: 7px; }
+      .mock-art { width: 78px; height: 90px; opacity: .8; }
+      .mock-site-hero { min-height: 174px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <header class="topbar">
+      <a class="brand" href="#overview" aria-label="Rydhx design system, ke overview">
+        <span class="brand-mark" aria-hidden="true">r.</span>
+        <span>rydhx</span>
+      </a>
+      <div class="top-meta">
+        <span class="version">Konsep awal · v1</span>
+        <span>Design system</span>
+      </div>
+    </header>
+
+    <div class="layout">
+      <aside class="sidebar" aria-label="Navigasi design system">
+        <div class="search-wrap">
+          <i class="search-icon" data-lucide="search" aria-hidden="true"></i>
+          <input class="search" id="section-search" type="search" placeholder="Cari bagian..." aria-label="Cari bagian">
+        </div>
+        <p class="nav-label">Dokumentasi</p>
+        <nav class="nav" id="section-nav">
+          <a class="nav-link active" href="#overview"><span class="nav-icon" aria-hidden="true"><i data-lucide="house"></i></span>Overview</a>
+          <a class="nav-link" href="#page-structure"><span class="nav-icon" aria-hidden="true"><i data-lucide="list-tree"></i></span>Struktur landing page</a>
+          <a class="nav-link" href="#colors"><span class="nav-icon" aria-hidden="true"><i data-lucide="palette"></i></span>Warna</a>
+          <a class="nav-link" href="#typography"><span class="nav-icon" aria-hidden="true"><i data-lucide="type"></i></span>Tipografi</a>
+          <a class="nav-link" href="#spacing"><span class="nav-icon" aria-hidden="true"><i data-lucide="move-horizontal"></i></span>Jarak</a>
+          <a class="nav-link" href="#radius"><span class="nav-icon" aria-hidden="true"><i data-lucide="square"></i></span>Radius</a>
+          <a class="nav-link" href="#shadows"><span class="nav-icon" aria-hidden="true"><i data-lucide="layers"></i></span>Bayangan</a>
+          <a class="nav-link" href="#components"><span class="nav-icon" aria-hidden="true"><i data-lucide="component"></i></span>Komponen</a>
+          <a class="nav-link" href="#assets"><span class="nav-icon" aria-hidden="true"><i data-lucide="images"></i></span>Aset & konten</a>
+        </nav>
+        <div class="sidebar-note">
+          <strong>Arah konsep</strong>
+          Katalog layanan desain yang terasa segar, rapi, dan mudah dipesan. Harga dan portofolio menunggu materi asli.
+        </div>
+      </aside>
+
+      <main>
+        <div class="content">
+          <section class="section" id="overview">
+            <div class="panel panel-pad">
+              <div class="hero-grid">
+                <div class="hero-copy">
+                  <p class="eyebrow">Arah brand · konsep awal</p>
+                  <h1>Desain yang bikin brand kamu <span class="serif-accent" style="color:var(--violet)">lebih diingat.</span></h1>
+                  <p class="lead">Rydhx membantu bisnis tampil lebih percaya diri lewat layanan desain yang jelas, proses order yang sederhana, dan hasil yang siap dipakai.</p>
+                  <div class="hero-actions">
+                    <a class="button" href="#components">Jelajahi layanan</a>
+                    <a class="button secondary" href="#page-structure">Lihat alur order</a>
+                  </div>
+                  <div class="hero-footnote"><span class="tag-dot" aria-hidden="true"></span>Violet untuk aksi · pink sebagai aksen · navy dan abu untuk struktur</div>
+                </div>
+                <div class="preview-window" aria-label="Pratinjau konsep landing page Rydhx">
+                  <div class="preview-bar"><i></i><i></i><i></i></div>
+                  <div class="preview-body">
+                    <div class="mock-site-nav">
+                      <div class="mock-logo"><span class="mock-mark">r.</span> rydhx</div>
+                      <div class="mock-navlinks"><span>Layanan</span><span>Portofolio</span><span>FAQ</span></div>
+                    </div>
+                    <div class="mock-site-hero">
+                      <span class="tag"><span class="tag-dot"></span>STUDIO DESAIN</span>
+                      <h3>Ide kamu, jadi visual yang <span class="serif-accent">standout.</span></h3>
+                      <p>Pilih layanan, lihat detail, lalu mulai order dengan brief yang jelas.</p>
+                      <a class="button" href="#components">Lihat layanan</a>
+                      <div class="mock-art" aria-hidden="true"></div>
+                    </div>
+                    <div class="mock-services" aria-label="Contoh kategori layanan">
+                      <div class="mock-service"><b>Identitas</b><span>Logo & visual brand</span></div>
+                      <div class="mock-service"><b>Konten</b><span>Desain sosial media</span></div>
+                      <div class="mock-service"><b>Promosi</b><span>Poster & materi jualan</span></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="grid grid-3" style="margin-top:28px">
+                <div class="mini-card"><p class="eyebrow">01 · Posisi</p><h3>Studio desain yang approachable</h3><p class="small">Ramah untuk pemilik usaha dan kreator yang ingin memesan desain tanpa proses yang membingungkan.</p></div>
+                <div class="mini-card"><p class="eyebrow">02 · Karakter</p><h3>Segar, rapi, percaya diri</h3><p class="small">Violet memberi fokus, pink memberi aksen, sementara navy dan abu terang menjaga katalog mudah dibaca.</p></div>
+                <div class="mini-card"><p class="eyebrow">03 · Prioritas</p><h3>Layanan dan harga mudah dibandingkan</h3><p class="small">Setiap kartu menjelaskan hasil, format, opsi, dan harga final setelah data Rydhx dilengkapi.</p></div>
+              </div>
+              <div class="notice" style="margin-top:16px"><i class="ph ph-info notice-icon" aria-hidden="true"></i><span><strong>Konsep, bukan data final.</strong> Jenis layanan di pratinjau adalah usulan awal. Harga, revisi, waktu pengerjaan, portofolio, dan kanal order belum diberikan, jadi tidak saya isi dengan angka atau klaim rekaan.</span></div>
+            </div>
+          </section>
+
+          <section class="section" id="page-structure">
+            <div class="panel panel-pad">
+              <div class="section-head">
+                <div><p class="eyebrow">Arsitektur informasi</p><h2>Struktur <span class="serif-accent">landing page</span></h2></div>
+                <span class="tag">Satu halaman · fokus konversi</span>
+              </div>
+              <p class="subtle">Urutan ini membawa calon pelanggan dari memahami Rydhx hingga mengetahui langkah order, tanpa menjejalkan seluruh detail di bagian pertama.</p>
+              <div class="tree">
+                <div class="tree-item"><strong>01 · Hero</strong>Proposisi nilai singkat, CTA ke katalog, dan visual karya.</div>
+                <div class="tree-item child"><strong>02 · Katalog / pricelist</strong>Kategori → paket/layanan → deliverable, harga, opsi, dan tombol pilih.</div>
+                <div class="tree-item child"><strong>03 · Detail layanan</strong>Brief yang dibutuhkan, format file, jumlah revisi, estimasi pengerjaan, serta yang tidak termasuk.</div>
+                <div class="tree-item"><strong>04 · Portofolio</strong>Contoh karya terpilih dengan kategori dan konteks singkat; gunakan karya asli Rydhx.</div>
+                <div class="tree-item"><strong>05 · Cara order</strong>Pilih desain → kirim brief → konfirmasi harga & jadwal → proses → review → file final.</div>
+                <div class="tree-item"><strong>06 · FAQ</strong>Jawab pertanyaan seputar pembayaran, revisi, file sumber, dan waktu pengerjaan.</div>
+                <div class="tree-item"><strong>07 · CTA penutup</strong>Ajak pengunjung konsultasi atau mulai order melalui kanal resmi Rydhx.</div>
+              </div>
+              <div class="grid grid-2" style="margin-top:18px">
+                <div class="mini-card"><h3>Progressive disclosure</h3><p class="small">Kartu menampilkan ringkasan harga dan hasil. Detail paket dibuka setelah pengunjung memilih layanan, misalnya lewat halaman detail atau accordion.</p></div>
+                <div class="mini-card"><h3>Data katalog yang disarankan</h3><p class="small">Simpan layanan, kategori, harga, deliverable, revisi, waktu pengerjaan, status aktif, dan gambar portofolio sebagai data terpisah agar katalog mudah diperbarui.</p></div>
+              </div>
+            </div>
+          </section>
+
+          <section class="section" id="colors">
+            <div class="panel panel-pad">
+              <div class="section-head"><div><p class="eyebrow">Token</p><h2><span class="serif-accent">Warna</span></h2></div><span class="small">Dua palet · satu sistem warna</span></div>
+              <p class="subtle">Palet pertama membangun identitas violet-pink, sementara palet kedua mengatur teks, permukaan netral, dan penanda status.</p>
+              <div id="color-groups"></div>
+            </div>
+          </section>
+
+          <section class="section" id="typography">
+            <div class="panel panel-pad">
+              <div class="section-head"><div><p class="eyebrow">Token</p><h2><span class="serif-accent">Tipografi</span></h2></div><span class="small">Plus Jakarta Sans · Instrument Serif italic</span></div>
+              <div class="type-row"><div class="type-label">Display · 56/58<br>800 weight</div><div class="type-sample type-hero">Ide yang <span class="serif-accent">standout.</span></div></div>
+              <div class="type-row"><div class="type-label">Page title · 34/38<br>800 weight</div><div class="type-sample type-title">Pilih desain yang <span class="serif-accent">tepat.</span></div></div>
+              <div class="type-row"><div class="type-label">Card title · 16/21<br>700 weight</div><div class="type-sample type-card-title">Paket desain sosial media</div></div>
+              <div class="type-row"><div class="type-label">Body · 15/23<br>400 weight</div><div class="type-sample type-body">Informasi paket, proses order, dan detail brief ditulis jelas dengan kalimat singkat.</div></div>
+              <div class="type-row"><div class="type-label">Small · 12/19<br>400 weight</div><div class="type-sample type-small">Kategori · Format file · Estimasi pengerjaan</div></div>
+              <div class="type-row"><div class="type-label">Caption · 11/16<br>500 weight</div><div class="type-sample type-caption">Harga belum termasuk kebutuhan tambahan</div></div>
+              <div class="type-row"><div class="type-label">Eyebrow · 10/14<br>800 weight</div><div class="type-sample type-eyebrow">Layanan pilihan · Rydhx studio</div></div>
+              <div class="type-row"><div class="type-label">Serif accent · 34/34<br>400 italic</div><div class="type-sample type-serif">kreatif dan berkarakter.</div></div>
+              <div class="notice" style="margin-top:17px"><span aria-hidden="true">Aa</span><span><strong>Aturan hirarki:</strong> Plus Jakarta Sans dipakai untuk seluruh UI, body, label, tombol, dan dasar judul. Instrument Serif italic menjadi aksen satu kata/frasa pendek pada display dan judul—bukan untuk paragraf atau label kecil.</span></div>
+            </div>
+          </section>
+
+          <section class="section" id="spacing">
+            <div class="panel panel-pad">
+              <div class="section-head"><div><p class="eyebrow">Token</p><h2><span class="serif-accent">Jarak</span></h2></div><span class="small">Skala 4 px · ruang lega untuk katalog</span></div>
+              <div class="scale-list" id="spacing-scale"></div>
+              <div class="grid grid-2" style="margin-top:22px">
+                <div class="mini-card"><h3>Konten desktop</h3><p class="small">Lebar bacaan dibatasi agar deskripsi paket dan tabel harga tidak terlalu melebar.</p></div>
+                <div class="mini-card"><h3>Gutter mobile</h3><p class="small">Gunakan ruang tepi 16–20 px dan susun kartu satu kolom untuk menjaga teks pricelist mudah dipindai.</p></div>
+              </div>
+            </div>
+          </section>
+
+          <section class="section" id="radius">
+            <div class="panel panel-pad">
+              <div class="section-head"><div><p class="eyebrow">Token</p><h2><span class="serif-accent">Radius</span></h2></div><span class="small">Bentuk lembut, tidak terlalu dekoratif</span></div>
+              <div class="radius-header"><span>Name</span><span>Value</span><span>Preview</span></div>
+              <div class="radius-demo" id="radius-demo"></div>
+            </div>
+          </section>
+
+          <section class="section" id="shadows">
+            <div class="panel panel-pad">
+              <div class="section-head"><div><p class="eyebrow">Token</p><h2><span class="serif-accent">Bayangan</span></h2></div><span class="small">Kedalaman halus dan konsisten</span></div>
+              <div class="grid grid-3" id="shadow-demo"></div>
+              <p class="small" style="margin:15px 0 0">Gunakan border dan perbedaan permukaan sebagai pembeda utama. Bayangan lebih kuat hanya untuk CTA atau elemen yang benar-benar mengambang.</p>
+            </div>
+          </section>
+
+          <section class="section" id="components">
+            <div class="panel panel-pad">
+              <div class="section-head"><div><p class="eyebrow">Pola UI</p><h2><span class="serif-accent">Komponen</span></h2></div><span class="small">Contoh visual · data layanan masih placeholder</span></div>
+              <div class="grid grid-2">
+                <div class="component-card">
+                  <div class="component-label">Button · actions</div>
+                  <div class="button-row"><button class="button small-button" type="button">Lihat pricelist</button><button class="button secondary small-button" type="button">Pelajari proses</button><button class="button dark small-button" type="button">Mulai order</button></div>
+                </div>
+                <div class="component-card">
+                  <div class="component-label">Status · service badge</div>
+                  <div class="button-row"><span class="pill"><i class="ph ph-star status-icon" aria-hidden="true"></i>Paling diminati</span><span class="pill neutral"><i class="ph ph-file-text status-icon" aria-hidden="true"></i>File digital</span><span class="pill warning"><i class="ph ph-clock status-icon" aria-hidden="true"></i>Slot terbatas</span></div>
+                  <p class="small" style="margin:17px 0 0">Lucide untuk navigasi dan fungsi UI; Phosphor untuk status yang perlu ekspresi. Status tetap memakai label teks, bukan warna saja.</p>
+                </div>
+                <div class="component-card">
+                  <div class="component-label">Form · brief order</div>
+                  <label class="small" for="brief-email">Email untuk menerima update</label>
+                  <input class="demo-input" id="brief-email" type="email" placeholder="nama@email.com" style="margin-top:7px">
+                </div>
+                <article class="service-card">
+                  <div class="component-label">Card · pricelist item</div>
+                  <span class="pill">Konten sosial media</span>
+                  <h3>Desain konten sosial media</h3>
+                  <p>Template paket, jumlah desain, format, dan revisi diisi berdasarkan layanan Rydhx.</p>
+                  <div class="service-bottom"><span class="price-placeholder">Harga belum diisi</span><button class="button secondary small-button" type="button">Detail</button></div>
+                </article>
+              </div>
+              <div class="component-label" style="margin-top:24px">Flow · cara order</div>
+              <div class="steps">
+                <div class="step"><h3>Pilih layanan</h3><p>Bandingkan hasil, opsi, dan harga.</p></div>
+                <div class="step"><h3>Kirim brief</h3><p>Ceritakan tujuan, ukuran, dan referensi.</p></div>
+                <div class="step"><h3>Konfirmasi</h3><p>Sepakati harga, jadwal, dan pembayaran.</p></div>
+                <div class="step"><h3>Terima hasil</h3><p>Review sesuai ketentuan lalu terima file final.</p></div>
+              </div>
+            </div>
+          </section>
+
+          <section class="section" id="assets">
+            <div class="panel panel-pad">
+              <div class="section-head"><div><p class="eyebrow">Materi yang dibutuhkan</p><h2>Aset & <span class="serif-accent">konten</span></h2></div><span class="tag">Belum ada aset dari pemilik</span></div>
+              <div class="grid grid-3">
+                <div class="asset-placeholder"><div><b>Logo Rydhx</b><span class="small">Wordmark sementara: rydhx</span></div></div>
+                <div class="asset-placeholder"><div><b>Portofolio asli</b><span class="small">Karya, kategori, dan izin tampil</span></div></div>
+                <div class="asset-placeholder"><div><b>Kontak order</b><span class="small">WhatsApp, email, atau platform order</span></div></div>
+              </div>
+              <div class="grid grid-2" style="margin-top:15px">
+                <div class="mini-card"><h3>Data pricelist</h3><p class="small">Nama paket, harga, satuan, deliverable, jumlah revisi, estimasi, dan biaya tambahan.</p></div>
+                <div class="mini-card"><h3>Aturan layanan</h3><p class="small">Alur pembayaran, batas revisi, kebijakan pembatalan, hak penggunaan, dan format file final.</p></div>
+              </div>
+            </div>
+          </section>
+          <p class="footer-note">Rydhx · konsep design system awal. Tinjau harga, layanan, aset, dan aturan order sebelum dipublikasikan.</p>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script type="module">
+    import "@phosphor-icons/web/regular";
+    import {
+      Component,
+      createIcons,
+      House,
+      Images,
+      Layers,
+      ListTree,
+      MoveHorizontal,
+      Palette,
+      Search,
+      Square,
+      Type,
+    } from "lucide";
+
+    const colorGroups = [
+      {
+        title: "Palet 01 · Soft violet",
+        tokens: [
+          ["pink-white", "#FFF7FC", "Latar halaman"],
+          ["periwinkle", "#8B93FF", "Highlight dan aksen pendamping"],
+          ["violet", "#5755FE", "Aksi utama dan fokus"],
+          ["pink", "#FF71CD", "Aksen kreatif dan visual"]
+        ]
+      },
+      {
+        title: "Palet 02 · Navy & signals",
+        tokens: [
+          ["navy", "#3C486B", "Teks utama dan struktur"],
+          ["light-gray", "#F0F0F0", "Permukaan netral"],
+          ["sun-yellow", "#F9D949", "Status perhatian"],
+          ["coral-red", "#F45050", "Status error dan urgensi"]
+        ]
+      }
+    ];
+
+    const spacingTokens = [
+      ["space-1", 4], ["space-2", 8], ["space-3", 12], ["space-4", 16],
+      ["space-5", 20], ["space-6", 24], ["space-7", 32], ["space-8", 40]
+    ];
+    const radiusTokens = [
+      ["radius-sm", "10px", "Tag kecil dan elemen kompak"],
+      ["radius-md", "16px", "Input dan baris"],
+      ["radius-lg", "22px", "Kartu sekunder"],
+      ["radius-xl", "28px", "Kartu utama"],
+      ["radius-2xl", "32px", "Kartu hero"],
+      ["radius-full", "9999px", "Tombol dan pill"]
+    ];
+    const shadowTokens = [
+      ["shadow-card", "Kartu layanan", "var(--shadow-card)"],
+      ["shadow-float", "CTA utama", "var(--shadow-float)"],
+      ["shadow-none", "Konten standar", "none"]
+    ];
+
+    document.getElementById("color-groups").innerHTML = colorGroups.map(group => `
+      <div class="token-group">
+        <h3>${group.title}</h3>
+        <div class="token-grid">
+          ${group.tokens.map(([name, value, usage]) => `
+            <div class="swatch" title="${usage}">
+              <div class="swatch-color" style="background:${value}"></div>
+              <div class="swatch-info">
+                <div class="swatch-name"><span>${name}</span></div>
+                <div class="swatch-hex">${value} · ${usage}</div>
+              </div>
+            </div>
+          `).join("")}
+        </div>
+      </div>
+    `).join("");
+
+    document.getElementById("spacing-scale").innerHTML = spacingTokens.map(([name, value]) => `
+      <div class="scale-row">
+        <span class="scale-name">${name}</span>
+        <span class="scale-bar" style="max-width:${Math.max(14, value * 7)}px"></span>
+        <span class="scale-value">${value}px</span>
+      </div>
+    `).join("");
+
+    document.getElementById("radius-demo").innerHTML = radiusTokens.map(([name, value, usage]) => `
+      <div class="radius-row">
+        <span><span class="radius-name">${name}</span><span class="radius-use">${usage}</span></span>
+        <span class="radius-value">${value}</span>
+        <span class="radius-preview" style="border-radius:${value}" aria-hidden="true"></span>
+      </div>
+    `).join("");
+
+    document.getElementById("shadow-demo").innerHTML = shadowTokens.map(([name, label, shadow]) => `
+      <div class="mini-card">
+        <div class="shadow-demo" style="box-shadow:${shadow}"></div>
+        <h3 style="margin:12px 0 2px">${name}</h3>
+        <span class="small">${label}</span>
+      </div>
+    `).join("");
+
+    const navLinks = [...document.querySelectorAll(".nav-link")];
+    const sections = navLinks.map(link => document.querySelector(link.getAttribute("href"))).filter(Boolean);
+
+    document.getElementById("section-search").addEventListener("input", event => {
+      const query = event.target.value.trim().toLocaleLowerCase("id");
+      navLinks.forEach(link => {
+        link.hidden = !link.textContent.toLocaleLowerCase("id").includes(query);
+      });
+    });
+
+    navLinks.forEach(link => {
+      link.addEventListener("click", () => {
+        navLinks.forEach(item => item.classList.toggle("active", item === link));
+      });
+    });
+
+    if ("IntersectionObserver" in window) {
+      const sectionObserver = new IntersectionObserver(entries => {
+        const visible = entries.filter(entry => entry.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+        if (!visible) return;
+        navLinks.forEach(link => link.classList.toggle("active", link.getAttribute("href") === `#${visible.target.id}`));
+      }, { rootMargin: "-18% 0px -68% 0px", threshold: [0, .15, .35] });
+      sections.forEach(section => sectionObserver.observe(section));
+    }
+
+    createIcons({
+      icons: {
+        Component,
+        House,
+        Images,
+        Layers,
+        ListTree,
+        MoveHorizontal,
+        Palette,
+        Search,
+        Square,
+        Type,
+      },
+      attrs: { "stroke-width": 1.8 },
+    });
+  </script>
+</body>
+</html>
